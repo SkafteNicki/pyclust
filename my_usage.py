@@ -36,7 +36,7 @@ if __name__ == '__main__':
                 if 'top' not in line and len(line)>1:
                     print(line)
                     counter += 1
-        print('You are using ' + str(counter) + 'gpu')
+        print('You are using ' + str(counter) + ' GPUs')
     finally:
         ssh.close()
 
