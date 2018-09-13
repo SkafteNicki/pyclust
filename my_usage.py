@@ -10,10 +10,7 @@ Created on Tue Jun 12 11:58:56 2018
 import paramiko
 
 #%%
-if __name__ == '__main__':
-    ssh = paramiko.SSHClient()
-    ssh.load_system_host_keys()
-    
+def my_usage(ssh):
     try:
         counter = 0
         for i in range(1, 13):
@@ -39,4 +36,11 @@ if __name__ == '__main__':
         print('You are using ' + str(counter) + ' GPUs')
     finally:
         ssh.close()
+        
+#%%
+if __name__ == '__main__':
+    ssh = paramiko.SSHClient()
+    ssh.load_system_host_keys()
+    my_usage(ssh)
+    
 

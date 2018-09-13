@@ -113,6 +113,10 @@ if __name__ == '__main__':
         # close all the pseudofiles
         stdout.close()
         stderr.close()
-        
+    
+    except KeyboardInterrupt:
+        print("\n \n")
+        print("You stopped the command \n")
+    
     finally: # close connection in the end
         ssh.close()
