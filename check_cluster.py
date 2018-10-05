@@ -19,33 +19,36 @@ def check_cluster(ssh, verbose=True):
             if verbose:
                 print(47*"=" + "titan{0:02d}".format(i) + 47*"=")
             
-            # Connect to host
-            ssh.connect("titan{0:02d}".format(i))
+            try:
+                # Connect to host
+                ssh.connect("titan{0:02d}".format(i))
             
-            # Commands to run
-            comm = [' cuda-smi']
-            comm = ';'.join(comm)
+                # Commands to run
+                comm = [' cuda-smi']
+                comm = ';'.join(comm)
             
-            # Execute commands        
-            stdin, stdout, stderr = ssh.exec_command(comm, get_pty=True)
+                # Execute commands        
+                stdin, stdout, stderr = ssh.exec_command(comm, get_pty=True)
             
-            # Print output
-            output = stdout.read().decode("utf-8")
-            output = output.split('\n')[:-1]
+                # Print output
+                output = stdout.read().decode("utf-8")
+                output = output.split('\n')[:-1]
             
-            for j, line in enumerate(output):
-                count_all += 1
-                in_use = int(line.split(':')[-1].split('of')[0])
-                if in_use < 20:
-                    if verbose:
-                        print(line)
-                    count_filt += 1
-                    found = True
-                    if not verbose and found:
-                        cluster = i
-                        gpu = j
-                        break
-                    
+                for j, line in enumerate(output):
+                    count_all += 1
+                    in_use = int(line.split(':')[-1].split('of')[0])
+                    if in_use < 20:
+                        if verbose:
+                            print(line)
+                        count_filt += 1
+                        found = True
+                        if not verbose and found:
+                            cluster = i
+                            gpu = j
+                            break
+            except:
+                print('could not connect to this cluster!')
+            
             if not verbose and found:
                 break
                     
